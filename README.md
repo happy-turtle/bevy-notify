@@ -2,7 +2,7 @@
 
 ## :construction: Work In Progress :construction:
 
-A bevy plugin wrapping the crate egui-notify to allow sending toast messages utilizing events.
+A bevy plugin wrapping the crate [`egui-notify`](https://github.com/ItsEthra/egui-notify) to allow sending toast messages utilizing events.
 
 ## Usage
 
