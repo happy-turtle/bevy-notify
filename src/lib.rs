@@ -32,10 +32,10 @@ fn update_toasts(
 
     let mut reader = events.get_reader();
     for event in reader.iter(&events) {
-        // TODO do this for each event received
         toasts
             .info(event.label.as_str())
             .set_duration(Some(event.duration))
+            // TODO
             // .set_level(event.level)
             .set_closable(event.closable);
     }
