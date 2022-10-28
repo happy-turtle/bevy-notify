@@ -12,4 +12,5 @@ authors = ["happy-turtle"]
 
 [dependencies]
 bevy = "0.8"
+bevy_egui = "0.16"
 egui-notify = "0.4"

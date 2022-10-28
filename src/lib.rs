@@ -1,14 +1,43 @@
-pub fn add(left: usize, right: usize) -> usize {
-    left + right
+use bevy::prelude::{App, Events, Plugin, ResMut};
+use bevy_egui::EguiContext;
+pub use egui_notify::ToastLevel;
+use egui_notify::*;
+
+pub mod prelude {
+    pub use crate::*;
 }
 
-#[cfg(test)]
-mod tests {
-    use super::*;
+pub struct NotifyPlugin;
+pub struct ToastEvent {
+    pub label: String,
+    pub duration: std::time::Duration,
+    pub level: ToastLevel,
+    pub closable: bool,
+}
 
-    #[test]
-    fn it_works() {
-        let result = add(2, 2);
-        assert_eq!(result, 4);
+impl Plugin for NotifyPlugin {
+    fn build(&self, app: &mut App) {
+        app.insert_resource(Toasts::default())
+            .insert_resource(Events::<ToastEvent>::default())
+            .add_system(update_toasts);
     }
+}
+
+fn update_toasts(
+    mut egui_context: ResMut<EguiContext>,
+    mut toasts: ResMut<Toasts>,
+    mut events: ResMut<Events<ToastEvent>>,
+) {
+    events.update();
+
+    let mut reader = events.get_reader();
+    for event in reader.iter(&events) {
+        // TODO do this for each event received
+        toasts
+            .info(event.label.as_str())
+            .set_duration(Some(event.duration))
+            // .set_level(event.level)
+            .set_closable(event.closable);
+    }
+    toasts.show(egui_context.ctx_mut());
 }
