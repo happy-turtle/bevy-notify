@@ -29,14 +29,11 @@ fn update_toasts(
     mut events: ResMut<Events<ToastEvent>>,
 ) {
     events.update();
-
-    let mut reader = events.get_reader();
-    for event in reader.iter(&events) {
+    for event in events.drain() {
         toasts
             .info(event.label.as_str())
             .set_duration(Some(event.duration))
-            // TODO
-            // .set_level(event.level)
+            .set_level(event.level)
             .set_closable(event.closable);
     }
     toasts.show(egui_context.ctx_mut());
