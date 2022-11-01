@@ -1,6 +1,6 @@
 use bevy::prelude::*;
 use bevy_egui::EguiPlugin;
-use bevy_notify::prelude::*;
+use bevy_notify::*;
 
 fn main() {
     let mut app = App::new();
