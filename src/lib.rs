@@ -1,6 +1,6 @@
 //! # bevy-notify
 //!
-//! `bevy-notify` is a bevy plugin wrapping [egui_notify](https://docs.rs/egui-notify/latest/egui_notify/) and
+//! `bevy-notify` is a bevy plugin wrapping [egui_notify](https://crates.io/crates/egui-notify) and
 //! adding an event receiver to your bevy app. Toast notifications can then be send
 //! in your bevy app at any point.
 //! # Examples
@@ -33,8 +33,8 @@ pub use egui_notify::*;
 ///
 /// ```
 /// App::new().add_plugin(NotifyPlugin)
-///         .add_plugin(EguiPlugin)
-///         .insert_resource(Toasts::default());
+///     .add_plugin(EguiPlugin)
+///     .insert_resource(Toasts::default());
 /// ```
 pub struct NotifyPlugin;
 

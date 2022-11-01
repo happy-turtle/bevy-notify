@@ -3,9 +3,8 @@ name = "bevy-notify"
 version = "0.1.0"
 edition = "2021"
 license = "GPL-3.0-or-later"
-readme = "../README.md"
 repository = "https://github.com/happy-turtle/bevy-notify"
-description = "Bevy plugin wrapping the crate egui-notify"
+description = "Bevy plugin wrapping the crate egui_notify"
 authors = ["happy-turtle"]
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
