@@ -1,31 +1,24 @@
 use bevy::prelude::*;
 use bevy_egui::EguiPlugin;
 use bevy_notify::prelude::*;
-use std::time::Duration;
 
 fn main() {
-    App::new()
-        .add_plugins(DefaultPlugins)
-        .add_plugin(NotifyPlugin)
+    let mut app = App::new();
+    // everything you need for bevy-notify
+    app.add_plugin(NotifyPlugin)
         .add_plugin(EguiPlugin)
-        .add_system(notify_example)
-        .insert_resource(AmbientLight {
-            color: Color::WHITE,
-            brightness: 1.0 / 5.0f32,
-        })
+        .insert_resource(Toasts::default());
+
+    // sample app
+    app.add_plugins(DefaultPlugins)
         .add_startup_system(scene_setup)
+        .add_system(notify_example)
         .run();
 }
 
-fn notify_example(mouse_input: Res<Input<MouseButton>>, mut events: ResMut<Events<ToastEvent>>) {
-    if mouse_input.just_pressed(MouseButton::Left) {
-        // TODO: default fields
-        events.send(ToastEvent {
-            label: "Hello world".to_string(),
-            duration: Duration::from_secs(5),
-            level: ToastLevel::Error,
-            closable: true,
-        });
+fn notify_example(key_input: Res<Input<KeyCode>>, mut events: ResMut<Events<Toast>>) {
+    if key_input.just_pressed(KeyCode::Space) {
+        events.send(Toast::success("Space pressed"));
     }
 }
 
@@ -69,11 +62,6 @@ fn scene_setup(
             },
             ..default()
         },
-        ..default()
-    });
-    commands.spawn_bundle(PbrBundle {
-        mesh: meshes.add(Mesh::from(shape::Plane { size: 10.0 })),
-        material: materials.add(Color::rgb(0.3, 0.5, 0.3).into()),
         ..default()
     });
 }
