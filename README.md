@@ -10,7 +10,7 @@ fn main() {
         .add_plugins(DefaultPlugins)
         .add_plugin(NotifyPlugin)
         .add_plugin(EguiPlugin)
-        .insert_resource(Toasts::default())
+        .insert_resource(Notifications(Toasts::default()))
         .add_system(notify_example_system)
         .run();
 }
@@ -29,5 +29,5 @@ Add the plugin to your bevy app alongside the `EguiPlugin` from [bevy_egui](http
 ```
 App::new().add_plugin(NotifyPlugin)
     .add_plugin(EguiPlugin)
-    .insert_resource(Toasts::default());
+    .insert_resource(Notifications(Toasts::default()));
 ```
