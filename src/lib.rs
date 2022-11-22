@@ -11,7 +11,7 @@
 //!         .add_plugins(DefaultPlugins)
 //!         .add_plugin(NotifyPlugin)
 //!         .add_plugin(EguiPlugin)
-//!         .insert_resource(Toasts::default())
+//!         .insert_resource(Notifications(Toasts::default()))
 //!         .add_system(notify_example_system)
 //!         .run();
 //! }
@@ -22,7 +22,7 @@
 //!     }
 //! }
 //! ```
-use bevy::prelude::{App, Events, Plugin, ResMut};
+use bevy::prelude::{App, Events, Plugin, ResMut, Resource};
 use bevy_egui::EguiContext;
 pub use egui_notify::*;
 
@@ -34,7 +34,7 @@ pub use egui_notify::*;
 /// ```
 /// App::new().add_plugin(NotifyPlugin)
 ///     .add_plugin(EguiPlugin)
-///     .insert_resource(Toasts::default());
+///     .insert_resource(Notifications(Toasts::default()));
 /// ```
 pub struct NotifyPlugin;
 
@@ -45,14 +45,17 @@ impl Plugin for NotifyPlugin {
     }
 }
 
+#[derive(Resource)]
+pub struct Notifications(pub Toasts);
+
 fn update_toasts(
     mut egui_context: ResMut<EguiContext>,
-    mut toasts: ResMut<Toasts>,
+    mut toasts: ResMut<Notifications>,
     mut events: ResMut<Events<Toast>>,
 ) {
     events.update();
     for event in events.drain() {
-        toasts.add(event);
+        toasts.0.add(event);
     }
-    toasts.show(egui_context.ctx_mut());
+    toasts.0.show(egui_context.ctx_mut());
 }

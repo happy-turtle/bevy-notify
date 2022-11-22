@@ -1,6 +1,6 @@
 [package]
 name = "bevy-notify"
-version = "0.1.0"
+version = "0.2.0"
 edition = "2021"
 license = "GPL-3.0-or-later"
 repository = "https://github.com/happy-turtle/bevy-notify"
@@ -10,6 +10,6 @@ authors = ["happy-turtle"]
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-bevy = "0.8"
-bevy_egui = "0.16"
+bevy = "0.9"
+bevy_egui = "0.17"
 egui-notify = "0.4"

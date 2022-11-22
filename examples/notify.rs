@@ -5,13 +5,13 @@ use bevy_notify::*;
 fn main() {
     let mut app = App::new();
     // everything you need for bevy-notify
-    app.add_plugin(NotifyPlugin)
+    app.add_plugins(DefaultPlugins)
         .add_plugin(EguiPlugin)
-        .insert_resource(Toasts::default());
+        .add_plugin(NotifyPlugin)
+        .insert_resource(Notifications(Toasts::default()));
 
     // sample app
-    app.add_plugins(DefaultPlugins)
-        .add_startup_system(scene_setup)
+    app.add_startup_system(scene_setup)
         .add_system(notify_example)
         .run();
 }
@@ -27,12 +27,12 @@ fn scene_setup(
     mut meshes: ResMut<Assets<Mesh>>,
     mut materials: ResMut<Assets<StandardMaterial>>,
 ) {
-    commands.spawn_bundle(Camera3dBundle {
+    commands.spawn(Camera3dBundle {
         transform: Transform::from_xyz(5.0, 5.0, 1.0).looking_at(Vec3::new(0.0, 0.3, 0.0), Vec3::Y),
         ..default()
     });
     const HALF_SIZE: f32 = 1.0;
-    commands.spawn_bundle(DirectionalLightBundle {
+    commands.spawn(DirectionalLightBundle {
         directional_light: DirectionalLight {
             shadow_projection: OrthographicProjection {
                 left: -HALF_SIZE,
@@ -48,7 +48,7 @@ fn scene_setup(
         },
         ..default()
     });
-    commands.spawn_bundle(PbrBundle {
+    commands.spawn(PbrBundle {
         mesh: meshes.add(Mesh::from(shape::Icosphere {
             radius: 1.0,
             ..default()
